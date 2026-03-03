@@ -294,7 +294,8 @@ app.post('/api/gemini/analyze', async (req, res) => {
     res.json({ text: response.text });
   } catch (error: any) {
     console.error('Gemini Analyze Error:', error);
-    res.status(500).json({ error: error.message });
+    const errorMessage = error.message || (error.error && error.error.message) || String(error);
+    res.status(500).json({ error: errorMessage });
   }
 });
 
@@ -345,7 +346,8 @@ app.post('/api/gemini/master-prompt', async (req, res) => {
     });
   } catch (error: any) {
     console.error('Gemini Master Prompt Error:', error);
-    res.status(500).json({ error: error.message });
+    const errorMessage = error.message || (error.error && error.error.message) || String(error);
+    res.status(500).json({ error: errorMessage });
   }
 });
 
@@ -404,7 +406,8 @@ app.post('/api/gemini/generate-image', async (req, res) => {
     res.json({ imageUrl });
   } catch (error: any) {
     console.error('Gemini Generate Image Error:', error);
-    res.status(500).json({ error: error.message });
+    const errorMessage = error.message || (error.error && error.error.message) || String(error);
+    res.status(500).json({ error: errorMessage });
   }
 });
 
@@ -447,7 +450,8 @@ app.post('/api/gemini/enhance-image', async (req, res) => {
     res.json({ imageUrl });
   } catch (error: any) {
     console.error('Gemini Enhance Image Error:', error);
-    res.status(500).json({ error: error.message });
+    const errorMessage = error.message || (error.error && error.error.message) || String(error);
+    res.status(500).json({ error: errorMessage });
   }
 });
 

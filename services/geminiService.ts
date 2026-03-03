@@ -105,7 +105,8 @@ const executeWithRetry = async (operation: () => Promise<Response>, maxRetries =
       }
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+        const errorMessage = errorData.error || errorData.message || `HTTP error! status: ${response.status}`;
+        throw new Error(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
       }
       return await response.json();
     } catch (error: any) {

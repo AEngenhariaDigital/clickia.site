@@ -93,7 +93,8 @@ ESQUEMA JSON OBRIGATÓRIO:
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to analyze image');
+      const errorMessage = errorData.error || errorData.message || 'Failed to analyze image';
+      throw new Error(typeof errorMessage === 'string' ? errorMessage : JSON.stringify(errorMessage));
     }
 
     const data = await response.json();
