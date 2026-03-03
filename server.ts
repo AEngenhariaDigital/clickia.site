@@ -84,7 +84,12 @@ app.get('/api/photos', async (req, res) => {
       .order('created_at', { ascending: false })
       .range(from, to);
 
-    if (error) throw error;
+    if (error) {
+      if (error.message?.includes('Could not find the table') || error.code === 'PGRST205') {
+        throw new Error("A tabela 'photos' não foi encontrada. Você precisa executar o script 'supabase_setup.sql' no painel do Supabase (SQL Editor).");
+      }
+      throw error;
+    }
     res.json(data);
   } catch (error: any) {
     logSupabaseError('DB Fetch Error', error);
